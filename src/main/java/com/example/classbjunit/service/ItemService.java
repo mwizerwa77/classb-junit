@@ -21,6 +21,7 @@ public class ItemService {
 		for(Item item:items) {
 			item.setValue(item.getQuantity()*item.getPrice());
 		}
+		
 		return items;
 	}
 
