@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -23,6 +24,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.example.classbjunit.model.Item;
 import com.example.classbjunit.service.ItemService;
+import com.example.classbjunit.utils.APIResponse;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(ItemController.class)
@@ -51,5 +53,25 @@ public class ItemControllerTest {
 						.andReturn();
 			
 	}
+	
+	@Test
+	public void getByOne_404() throws Exception {
+		Item item = new Item(1,"Samuel",1,10);
+		
+		when(itemServiceMock.getById(item.getId())).thenReturn(item);
+		
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+				.get("/all-items/2")
+				.accept(MediaType.APPLICATION_JSON);
+				
+				 MvcResult result = mockMvc
+						.perform(request)
+						.andExpect(status().isNotFound())
+						//.andExpect(content().string(""))
+						.andExpect(content().json("{\"status\":false,\"message\":\"Item not found\"}"))
+						.andReturn();
+			
+	}
+
 	
 }
