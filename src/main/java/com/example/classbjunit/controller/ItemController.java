@@ -26,17 +26,6 @@ public class ItemController {
 	}
 
 	@GetMapping("/all-items/{id}")
-<<<<<<< HEAD
-	public ResponseEntity<?> getById(@PathVariable(name="id") int id){
-		
-		Item item = itemService.getById(id);
-		if(item !=null) {
-			return ResponseEntity.ok(item);
-		}
-		return ResponseEntity.notFound().build();
-//		return ResponseEntity.ok().(new APIRe);
-
-=======
 	public ResponseEntity<?> getById(@PathVariable(name = "id") int id) {
 
 		Item item = itemService.getById(id);
@@ -44,6 +33,5 @@ public class ItemController {
 			return ResponseEntity.ok(item);
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new APIResponse(false, "Item not found"));
->>>>>>> e9e68c3dfd4ffb12080dc9d8a9eacc44889a6b09
 	}
 }
