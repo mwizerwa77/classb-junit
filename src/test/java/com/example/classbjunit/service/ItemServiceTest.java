@@ -31,5 +31,4 @@ public class ItemServiceTest {
 				new Item(2,"Blessing",4,100)));
 		assertEquals(10,itemService.getAll().get(0).getValue());
 	}
-
 }
