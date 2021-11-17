@@ -3,6 +3,7 @@ package com.example.classbjunit.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,8 +24,14 @@ public class ItemController {
 	}
 	
 	@GetMapping("/all-items/{id}")
-	public Item getById(@PathVariable(name="id") int id){
+	public ResponseEntity<?> getById(@PathVariable(name="id") int id){
 		
-		return itemService.getById(id);
+		Item item = itemService.getById(id);
+		if(item !=null) {
+			return ResponseEntity.ok(item);
+		}
+		return ResponseEntity.notFound().build();
+//		return ResponseEntity.ok().(new APIRe);
+
 	}
 }
