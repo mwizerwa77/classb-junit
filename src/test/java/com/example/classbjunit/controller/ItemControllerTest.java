@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +15,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -22,6 +24,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.example.classbjunit.dto.UpdateItemDto;
 import com.example.classbjunit.model.Item;
 import com.example.classbjunit.service.ItemService;
 import com.example.classbjunit.utils.APIResponse;
@@ -73,5 +76,35 @@ public class ItemControllerTest {
 			
 	}
 
+	
+	@Test
+	public void update_success() throws Exception {
+		Item item = new Item(1,"money",1,10);
+		
+		ResponseEntity.status(HttpStatus.CREATED).body(item);
+		
+		ResponseEntity<?> respnse= ResponseEntity.status(HttpStatus.CREATED).body(item);
+		when(itemServiceMock.updateItem(1,new UpdateItemDto("money", 100, 3))).thenReturn(null);
+		
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+				.get("/all-items/2")
+				.accept(MediaType.APPLICATION_JSON);
+				
+				 MvcResult result = mockMvc
+						.perform(request)
+						.andExpect(status().isNotFound())
+						//.andExpect(content().string(""))
+						.andExpect(content().json("{\"status\":false,\"message\":\"Item not found\"}"))
+						.andReturn();
+			
+	}
+
+	
+	
+	
+	
+	
+	
+	
 	
 }
